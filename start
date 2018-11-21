@@ -1,13 +1,21 @@
 #!/bin/bash
 
 # Parse the environment variables and auto-create the default.vcl file
-/parse
+# /parse
 
-# Start varnish and log
-varnishd -f /etc/varnish/default.vcl -s malloc,100M -a 0.0.0.0:${VARNISH_PORT}
+# Compose varnish startup command
+STARTUP_CMD="varnishd -s malloc,100M \
+-a ${VARNISH_HOST}:${VARNISH_PORT} \
+-T ${VARNISH_CLI_HOST}:${VARNISH_CLI_PORT}"
 
-if [ "${VARNISH_LOGGING}" = "ncsa" ]; then
-    varnishncsa "${VARNISH_LOG_OPTIONS}"
+if [ ${VARNISH_BACKEND_HOST} ]; then
+	STARTUP_CMD="${STARTUP_CMD} -b ${VARNISH_BACKEND_HOST}:${VARNISH_BACKEND_PORT}"
 else
-    varnishlog "${VARNISH_LOG_OPTIONS}"
+	STARTUP_CMD="${STARTUP_CMD} -f /etc/varnish/default.vcl"
 fi
+
+# Start varnish
+$STARTUP_CMD
+
+# Start logging
+varnishlog

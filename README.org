@@ -1,0 +1,31 @@
+* Varnish with Docker
+** Varnish environment variables
+Varnish will use the following environment variables, as default:
+#+BEGIN_EXAMPLE
+VARNISH_PORT 80
+VARNISH_CLI_PORT 81
+#+END_EXAMPLE
+
+You could also set the following variables in the command line to override the default behavior:
+#+BEGIN_EXAMPLE
+
+#+END_EXAMPLE
+
+** Build the image
+To build the image run:
+#+BEGIN_EXAMPLE
+docker build -t varnish .
+#+END_EXAMPLE
+
+** Start the container
+If the variable =VARNISH_BACKEND_HOST= is set, varnish will use the backend set by the environment variables in the command. Note that in this case the following limits are present:
+- both variables: =VARNISH_BACKEND_HOST= and =VARNISH_BACKEND_PORT= should be set
+- the file in =/etc/varnish/default.vcl= is no considered
+#+BEGIN_EXAMPLE
+docker run -p 8080:80 -p 8081:81 -d --env VARNISH_BACKEND_HOST=a.b.c.d --env VARNISH_BACKEND_PORT=80 --name varnish varnish
+#+END_EXAMPLE
+
+If the variable =VARNISH_BACKEND_HOST= is not set, varnish will use the backend present in the VCL configuration file that should be already mounted at =/etc/varnish/default.vcl=.
+#+BEGIN_EXAMPLE
+docker run -p 8080:80 -p 8081:81 -d --name varnish varnish
+#+END_EXAMPLE

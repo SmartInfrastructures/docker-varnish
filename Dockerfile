@@ -1,6 +1,6 @@
 FROM        ubuntu:18.04
-MAINTAINER  Frank Lemanschik
- 
+MAINTAINER  Daniele Santoro
+
 ENV DEBIAN_FRONTEND noninteractive
 
 # Update apt sources
@@ -17,9 +17,15 @@ ADD default.vcl /etc/varnish/default.vcl
 
 # Export environment variables
 ENV VARNISH_PORT 80
+# ENV VARNISH_HOST 0.0.0.0
+# ENV VARNISH_CLI_HOST 0.0.0.0
+ENV VARNISH_CLI_PORT 81
+# ENV VARNISH_BACKEND_HOST
+# ENV VARNISH_BACKEND_PORT
 
 # Expose port 80
 EXPOSE 80
+EXPOSE 81
 
 ADD parse /parse
 ADD start /start
