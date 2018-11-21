@@ -6,10 +6,15 @@ VARNISH_PORT 80
 VARNISH_CLI_PORT 81
 #+END_EXAMPLE
 
-You could also set the following variables in the command line to override the default behavior:
+You could also use the following additional variables, which are not set by default.
 #+BEGIN_EXAMPLE
-
+VARNISH_HOST 0.0.0.0
+VARNISH_CLI_HOST 0.0.0.0
+VARNISH_BACKEND_HOST a.b.c.d
+VARNISH_BACKEND_PORT xx
 #+END_EXAMPLE
+
+All variables can be overridden from the docker run command.
 
 ** Build the image
 To build the image run:
