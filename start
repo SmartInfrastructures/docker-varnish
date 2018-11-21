@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Parse the environment variables and auto-create the default.vcl file
-# /parse
-
 # Compose varnish startup command
 STARTUP_CMD="varnishd -s malloc,100M \
 -a ${VARNISH_HOST}:${VARNISH_PORT} \

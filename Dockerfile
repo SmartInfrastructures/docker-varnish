@@ -27,9 +27,8 @@ ENV VARNISH_CLI_PORT 81
 EXPOSE 80
 EXPOSE 81
 
-ADD parse /parse
 ADD start /start
 
-RUN chmod 0755 /start /parse
+RUN chmod 0755 /start
 
 CMD ["/start"]
